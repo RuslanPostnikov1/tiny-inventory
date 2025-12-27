@@ -95,7 +95,7 @@ export default function ProductsTable({
     setDeleteDialogOpen(false);
 
     setDeleteLoading(true);
-    try {
+      try {
       await productsApi.delete(deletingProductId);
       // Remove only this product from optimistic state (not all)
       setOptimisticallyDeleted((prev) => {
@@ -108,7 +108,7 @@ export default function ProductsTable({
         message: 'Product deleted successfully',
         severity: 'success',
       });
-      onUpdate();
+        onUpdate();
     } catch (err) {
       // Rollback optimistic update on error
       setOptimisticallyDeleted((prev) => {
@@ -245,43 +245,43 @@ export default function ProductsTable({
           placeholder="Press Enter"
           sx={{ flex: '1 1 180px', minWidth: 180 }}
         />
-        <TextField
-          select
-          label="Category"
+            <TextField
+              select
+              label="Category"
           value={filters.category || ''}
           onChange={(e) => handleCategoryChange(e.target.value)}
-          size="small"
+              size="small"
           sx={{ flex: '1 1 150px', minWidth: 150 }}
-        >
-          <MenuItem value="">All Categories</MenuItem>
-          {categories.map((cat) => (
-            <MenuItem key={cat} value={cat}>
-              {cat}
-            </MenuItem>
-          ))}
-        </TextField>
-        <TextField
-          label="Min Price"
-          type="number"
+            >
+              <MenuItem value="">All Categories</MenuItem>
+              {categories.map((cat) => (
+                <MenuItem key={cat} value={cat}>
+                  {cat}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              label="Min Price"
+              type="number"
           value={localMinPrice}
           onChange={(e) => setLocalMinPrice(e.target.value)}
           onKeyDown={handlePriceKeyDown}
-          size="small"
+              size="small"
           inputProps={{ min: 0 }}
           placeholder="Enter"
           sx={{ flex: '1 1 100px', minWidth: 100 }}
-        />
-        <TextField
-          label="Max Price"
-          type="number"
+            />
+            <TextField
+              label="Max Price"
+              type="number"
           value={localMaxPrice}
           onChange={(e) => setLocalMaxPrice(e.target.value)}
           onKeyDown={handlePriceKeyDown}
-          size="small"
+              size="small"
           inputProps={{ min: 0 }}
           placeholder="Enter"
           sx={{ flex: '1 1 100px', minWidth: 100 }}
-        />
+            />
         <TextField
           select
           label="Stock Status"
@@ -385,18 +385,18 @@ export default function ProductsTable({
                         onClick={() => handleEdit(product)}
                         aria-label={`Edit ${product.name}`}
                       >
-                        <EditIcon fontSize="small" />
-                      </IconButton>
+                      <EditIcon fontSize="small" />
+                    </IconButton>
                     </Tooltip>
                     <Tooltip title="Delete product">
-                      <IconButton
-                        size="small"
-                        color="error"
+                    <IconButton
+                      size="small"
+                      color="error"
                         onClick={() => handleDeleteClick(product.id)}
                         aria-label={`Delete ${product.name}`}
-                      >
-                        <DeleteIcon fontSize="small" />
-                      </IconButton>
+                    >
+                      <DeleteIcon fontSize="small" />
+                    </IconButton>
                     </Tooltip>
                   </TableCell>
                 </TableRow>

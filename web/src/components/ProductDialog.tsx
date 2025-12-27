@@ -119,13 +119,27 @@ export default function ProductDialog({ open, product, storeId, onClose, onSave 
 
   const handleChange =
     (field: keyof ProductFormData) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value =
-        field === 'price' || field === 'quantity' ? Number(e.target.value) : e.target.value;
+      let value: string | number = e.target.value;
+
+      if (field === 'price') {
+        // Round to 2 decimal places
+        const num = parseFloat(e.target.value);
+        value = isNaN(num) ? 0 : Number(num.toFixed(2));
+      } else if (field === 'quantity') {
+        const num = parseInt(e.target.value, 10);
+        value = isNaN(num) ? 0 : num;
+      }
+
       setFormData({ ...formData, [field]: value });
       if (errors[field]) {
         setErrors({ ...errors, [field]: '' });
       }
     };
+
+  // Select all text on focus for numeric fields to replace default 0
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    e.target.select();
+  };
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
@@ -166,6 +180,7 @@ export default function ProductDialog({ open, product, storeId, onClose, onSave 
           fullWidth
           value={formData.price}
           onChange={handleChange('price')}
+          onFocus={handleFocus}
           inputProps={{ min: 0, step: 0.01 }}
           error={!!errors.price}
           helperText={errors.price}
@@ -178,7 +193,8 @@ export default function ProductDialog({ open, product, storeId, onClose, onSave 
           fullWidth
           value={formData.quantity}
           onChange={handleChange('quantity')}
-          inputProps={{ min: 0 }}
+          onFocus={handleFocus}
+          inputProps={{ min: 0, step: 1 }}
           error={!!errors.quantity}
           helperText={errors.quantity}
           disabled={loading}
