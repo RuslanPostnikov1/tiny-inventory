@@ -300,10 +300,10 @@ export default function ProductsTable({
             <IconButton
               onClick={handleResetFilters}
               disabled={!hasActiveFilters}
-              color="default"
+              color={hasActiveFilters ? 'error' : 'default'}
               sx={{
                 border: '1px solid',
-                borderColor: 'divider',
+                borderColor: hasActiveFilters ? 'error.main' : 'divider',
                 borderRadius: 1,
               }}
             >
